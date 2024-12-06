@@ -66,10 +66,3 @@ type ItemisedCorpse {
   MonsterAbilities: string @localized
   MonsterCategory: CorpseTypeTags
 }
-
-type Tinctures {
-  BaseItem: BaseItemTypes @unique
-  "1 stack of Mana Burn is applied every x milliseconds"
-  DebuffInterval: i32
-  Cooldown: i32
-}

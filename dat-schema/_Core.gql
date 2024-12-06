@@ -97,7 +97,16 @@ type ActiveSkills {
   _: bool
   _: bool
   _: bool
-  TransfigureBase: ActiveSkills
+  _: rid
+  _: string
+  _: rid
+  _: string
+  _: rid
+  _: rid
+  _: bool
+  _: string
+  _: i32
+  StatDescriptionList: string
 }
 
 enum ActiveSkillTargetTypes @indexing(first: 1) {
@@ -363,16 +372,11 @@ enum ArmourSurfaceTypes @indexing(first: 0) { _ }
 
 type ArmourTypes @tags(list: ["item:def"]) {
   BaseItemTypesKey: BaseItemTypes @unique
-  ArmourMin: i32
-  ArmourMax: i32
-  EvasionMin: i32
-  EvasionMax: i32
-  EnergyShieldMin: i32
-  EnergyShieldMax: i32
+  Armour: i32
+  Evasion: i32
+  EnergyShield: i32
   IncreasedMovementSpeed: i32
-  WardMin: i32
-  WardMax: i32
-  _: i32
+  Ward: i32
   _: i32
 }
 
@@ -389,7 +393,9 @@ type Ascendancy {
   PassiveTreeImage: string @file(ext: ".dds")
   _: i32
   _: i32
-  BackgroundImage: string
+  _: i32
+  _: i32
+  Disabled: bool
 }
 
 type AtlasFog {
@@ -498,6 +504,13 @@ type AtlasPositions {
   Y: f32
 }
 
+type AttributeRequirements {
+  BaseItemTypesKey: BaseItemTypes
+  ReqStr: i32
+  ReqInt: i32
+  ReqDex: i32
+}
+
 enum Attributes @indexing(first: 1) {
   STRENGTH
   DEXTERITY
@@ -560,9 +573,8 @@ type BaseItemTypes @tags(list: ["item:def", "item:droptable"]) {
   TradeMarketCategory: TradeMarketCategory
   Unmodifiable: bool
   Achievement: [AchievementItems]
-  _: [string]
-  IgnoreQuantBonus: bool
-  _: bool
+  _: rid
+  _: rid
 }
 
 type BindableVirtualKeys {
@@ -653,12 +665,13 @@ type BuffDefinitions {
   _: bool
   _: bool
   _: bool
-  _: bool
   _: Stats
   _: [i32]
   _: string
   _: [Stats]
-  _: bool
+  _: [i32]
+  _: i32
+  _: [rid]
 }
 
 enum BuffGroups @indexing(first: 0) { _ }
@@ -682,6 +695,7 @@ type BuffTemplates {
   _: i32
   _: bool
   _: Stats
+  _: bool
 }
 
 type BuffVisualOrbArt {
@@ -838,16 +852,19 @@ type Characters {
   _: i32
   _: i32
   CharacterSize: i32
+  _: i32
+  _: i32
+  _: i32
   IntroSoundFile: string @file(ext: ".ogg")
   StartWeapons: [BaseItemTypes]
   Gender: string
   TraitDescription: string @localized
   _: rid
   _: rid
+  _: [rid]
   _: rid
   _: rid
   _: i32
-  _: [rid]
   PassiveTreeImage: string @file(ext: ".dds")
   _: i32
   _: i32
@@ -856,7 +873,6 @@ type Characters {
   LoginScreen: string @file(ext: ".ao")
   PlayerCritter: string
   PlayerEffect: string
-  AfterImage: string
   Mirage: MonsterVarieties
   CloneImmobile: MonsterVarieties
   ReplicateClone: MonsterVarieties
@@ -865,7 +881,7 @@ type Characters {
   _: f32
   SkillTreeBackground: string
   Clone: MonsterVarieties
-  Double: MonsterVarieties
+  Double: [MonsterVarieties]
   MirageWarrior: MonsterVarieties
   DoubleTwo: MonsterVarieties
   DarkExile: MonsterVarieties
@@ -874,10 +890,15 @@ type Characters {
   Script: string
   _: rid
   _: i32
-  _: MonsterVarieties
-  _: MonsterVarieties
-  _: i32
   _: f32
+  _: f32
+  _: f32
+  _: string
+  _: i32
+  _: rid
+  _: [rid]
+  _: f32
+  _: string
 }
 
 type CharacterStartQuestState {
@@ -996,6 +1017,7 @@ type ClientStrings {
   XBoxText2: string
   HASH32: i32
   PlaystationText: string
+  _: string
 }
 
 type ClientLeagueAction {
@@ -1030,13 +1052,6 @@ type Commands {
   EnglishCommand: string
   Description: string
   _: bool
-}
-
-type ComponentAttributeRequirements @tags(list: ["item:def"]) {
-  BaseItemTypesKey: BaseItemTypes @ref(column: "Id") @unique
-  ReqStr: i32
-  ReqDex: i32
-  ReqInt: i32
 }
 
 type ComponentCharges @tags(list: ["item:def"]) {
@@ -1076,6 +1091,7 @@ type CostTypes {
   StatsKey: Stats
   FormatText: string
   _: i32
+  _: bool
 }
 
 enum CraftingBenchCustomActions @indexing(first: 0) {
@@ -1084,7 +1100,7 @@ enum CraftingBenchCustomActions @indexing(first: 0) {
 }
 
 type CraftingBenchOptions @tags(list: ["crafting"]) {
-  HideoutNPCsKey: HideoutNPCs
+  _: rid
   Order: i32
   AddMod: Mods
   Cost_BaseItemTypes: [BaseItemTypes]
@@ -1121,9 +1137,6 @@ type CraftingBenchOptions @tags(list: ["crafting"]) {
   _: Stats
   _: Stats
   _: Stats
-  MapDevice: bool
-  _: [rid]
-  Tags: [Tags]
 }
 
 type CraftingBenchSortCategories {
@@ -1153,7 +1166,6 @@ type CraftingItemClassCategories {
   ItemClasses: [ItemClasses]
   _: string
   Text: string
-  _: [rid]
 }
 
 type CurrencyItems @tags(list: ["item:def", "item:recipe"]) {
@@ -1179,6 +1191,7 @@ type CurrencyItems @tags(list: ["item:def", "item:recipe"]) {
   ChangedForHardmode: bool
   DescriptionHardmode: string
   IsGold: bool
+  _: string
   _: bool
 }
 
@@ -1264,6 +1277,8 @@ type DefaultMonsterStats {
   _: i32
   _: i32
   Armour: i32
+  _: i32
+  _: i32
 }
 
 type DeliriumStashTabLayout {
@@ -1596,10 +1611,10 @@ type Flasks @tags(list: ["item:def"]) {
   ManaPerUse: i32
   "in 1/10 s"
   RecoveryTime: i32
-  BuffDefinitionsKey: BuffDefinitions
-  BuffStatValues: [i32]
   RecoveryTime2: i32
-  BuffStatValues2: [i32]
+  BuffDefinitionsKey: BuffDefinitions
+  _: i32
+  UtilityBuff: [UtilityFlaskBuffs]
 }
 
 enum FlaskType @indexing(first: 1) {
@@ -1611,7 +1626,7 @@ enum FlaskType @indexing(first: 1) {
 
 type FlavourText {
   Id: string @unique
-  _: i32
+  HASH16: i16
   Text: string
 }
 
@@ -1692,7 +1707,6 @@ type GemTags {
   Stat1: Stats
   Stat2: Stats
   Stat3: Stats
-  Stat4: Stats
 }
 
 enum GemTypes @indexing(first: 0) { _ }
@@ -1897,12 +1911,21 @@ type Grandmasters {
 
 enum GrantedEffectGroups @indexing(first: 0) { _ }
 
+type GrantedEffectLabels {
+  Id: string
+  Text: string
+  _: bool
+  _: bool
+  _: bool
+}
+
 type GrantedEffectQualityStats @tags(list: ["item:droptable"]) {
   GrantedEffectsKey: GrantedEffects
   StatsKeys: [Stats]
   StatsValuesPermille: [i32]
   _: [_] # All rows empty
   _: [_] # All rows empty
+  _: [i32]
 }
 
 type GrantedEffects {
@@ -1911,15 +1934,13 @@ type GrantedEffects {
   "This support gem only supports active skills with at least one of these types"
   AllowedActiveSkillTypes: [ActiveSkillType]
   SupportGemLetter: string
-  Attribute: Attributes
   "This support gem adds these types to supported active skills"
   AddedActiveSkillTypes: [ActiveSkillType]
   "This support gem does not support active skills with one of these types"
   ExcludedActiveSkillTypes: [ActiveSkillType]
   "This support gem only supports active skills that come from gem items"
   SupportsGemsOnly: bool
-  _: i32
-  _: [i32]
+  HASH32: i32
   CannotBeSupported: bool
   _: i32
   CastTime: i32
@@ -1932,18 +1953,23 @@ type GrantedEffects {
   _: bool
   SupportWeaponRestrictions: [ItemClasses]
   RegularVariant: GrantedEffects
+  _: bool
   _: i32
   _: i32
   _: i32
   _: bool
   StatSet: GrantedEffectStatSets
-  _: [rid]
+  AdditionalStatSets: [GrantedEffectStatSets]
+  _: string
+  CostTypes: [CostTypes]
+  _: bool
+  _: [i32]
+  _: i32
 }
 
 type GrantedEffectsPerLevel {
   GrantedEffect: GrantedEffects
   Level: i32
-  PlayerLevelReq: f32
   CostMultiplier: i32
   StoredUses: i32
   Cooldown: i32
@@ -1955,42 +1981,49 @@ type GrantedEffectsPerLevel {
   SoulGainPreventionDuration: i32
   AttackSpeedMultiplier: i32
   _: i32
+  _: i32
+  _: i32
+  _: i32
+  _: i32
+  _: i32
+  Reservation: i32
+  _: i32
   CostAmounts: [i32]
-  CostTypes: [CostTypes]
-  ManaReservationFlat: i32
-  ManaReservationPercent: i32
-  LifeReservationFlat: i32
-  LifeReservationPercent: i32
-  AttackTime: i32
+  _: f32
+  _: i32
 }
 
 type GrantedEffectStatSets {
   Id: string @unique
+  Label: GrantedEffectLabels
   ImplicitStats: [Stats]
   ConstantStats: [Stats]
   ConstantStatsValues: [i32]
   BaseEffectiveness: f32
   IncrementalEffectiveness: f32
-  _: i32
+  _: f32
+  _: [rid]
+  _: bool
 }
 
 type GrantedEffectStatSetsPerLevel {
   StatSet: GrantedEffectStatSets
   GemLevel: i32
-  PlayerLevelReq: f32
   SpellCritChance: i32
   AttackCritChance: i32
-  BaseMultiplier: i32
-  DamageEffectiveness: i32
   BaseResolvedValues: [i32]
   AdditionalStatsValues: [i32]
   GrantedEffects: [GrantedEffects]
+  _: bool
+  _: i32
   AdditionalFlags: [Stats]
   FloatStats: [Stats]
   InterpolationBases: [Stats]
   AdditionalStats: [Stats]
   StatInterpolations: [StatInterpolationTypes]
   FloatStatsValues: [f32]
+  _: f32
+  BaseMultiplier: i32
 }
 
 enum GroundEffectEffectTypes @indexing(first: 0) { _ }
@@ -2089,9 +2122,6 @@ type HideoutNPCs {
   _: rid
   _: rid
   _: i32
-  _: rid
-  _: i32
-  _: bool
   _: rid
 }
 
@@ -2209,16 +2239,12 @@ type ItemClasses @tags(list: ["crafting"]) {
   CanScourge: bool
   CanUpgradeRarity: bool
   _: bool
-  _: bool
   MaxInventoryDimensions: [i32]
   Flags: [ItemClassFlags]
   Unmodifiable: bool
   CanBeFractured: bool
   EquipAchievements: AchievementItems
   UsedInMapDevice: bool
-  _: bool
-  _: bool
-  _: bool
 }
 
 enum ItemClassFlags @indexing(first: 0) {
@@ -2279,6 +2305,13 @@ type ItemExperiencePerLevel {
   ItemExperienceType: ItemExperienceTypes
   ItemCurrentLevel: i32
   Experience: i32
+  Level: i32
+}
+
+type ItemInherentSkills {
+  BaseItemTypesKey: BaseItemTypes
+  Skills: [SkillGems]
+  _: bool
 }
 
 type ItemisedVisualEffect {
@@ -2315,6 +2348,8 @@ enum ItemSetNames @indexing(first: 0) { _ }
 
 type ItemStances {
   Id: string @unique
+  _: bool
+  _: ItemStances
 }
 
 type ItemVisualEffect {
@@ -2375,7 +2410,7 @@ type ItemVisualIdentity {
   TemplarShape: string
   ShadowShape: string
   ScionShape: string
-  _: i32
+  _: rid
   _: i32
   Pickup_AchievementItemsKeys: [AchievementItems]
   SMFiles: [string] @file(ext: ".sm")
@@ -2403,6 +2438,21 @@ type ItemVisualIdentity {
   _: [i32]
   _: bool
   _: [rid]
+  _: [string]
+  _: [string]
+  _: [string]
+  _: [string]
+  _: [string]
+  _: [string]
+  _: [string]
+  _: string
+  _: string
+  _: string
+  _: string
+  _: string
+  _: string
+  _: string
+  _: string
   _: string
   "0: Standard, 1: Flask, 2: Divination Card, 3: Gem"
   Composition: i32
@@ -2410,9 +2460,20 @@ type ItemVisualIdentity {
   _: rid
   _: rid
   _: rid
-  _: [rid]
-  _: [rid]
-  _: bool
+  _: [string]
+  _: [string]
+  _: [string]
+  _: [string]
+  _: [string]
+  _: [string]
+  _: rid
+  _: string
+  _: string
+  _: string
+  _: string
+  _: string
+  _: string
+  _: string
 }
 
 type JobAssassinationSpawnerGroups {
@@ -2428,6 +2489,13 @@ type JobRaidBrackets {
   _: i32
   _: i32
   _: i32
+}
+
+type KeywordPopups {
+  Id: string
+  Name: string
+  Description: string
+  UiFile: string @file(ext: ".ui")
 }
 
 type KillstreakThresholds {
@@ -2625,19 +2693,10 @@ type MapPurchaseCosts {
 type Maps @tags(list: ["item:def", "item:recipe"]) {
   BaseItemTypesKey: BaseItemTypes @unique
   Regular_WorldAreasKey: WorldAreas
-  Unique_WorldAreasKey: WorldAreas
-  MapUpgrade_BaseItemTypesKey: BaseItemTypes
   MonsterPacksKeys: [MonsterPacks]
   AchievementItem: AchievementItems
-  Regular_GuildCharacter: string
-  Unique_GuildCharacter: string
+  _: string
   Tier: i32
-  Shaped_Base_MapsKey: Maps
-  Shaped_AreaLevel: i32
-  UpgradedFrom_MapsKey: Maps
-  MapsKey2: Maps
-  MapsKey3: Maps
-  "References MapSeries as an enum: i32, 1-based indexing"
   MapSeriesKey: i32
   _: bool
   _: bool
@@ -2654,7 +2713,6 @@ type MapSeries {
   Drawn_DDSFile: string @file(ext: ".dds")
   Delirious_DDSFile: string @file(ext: ".dds")
   UberBlight_DDSFile: string @file(ext: ".dds")
-  Purple_DDSFile: string @file(ext: ".dds")
 }
 
 type MapSeriesTiers {
@@ -3068,7 +3126,7 @@ enum ModGenerationType @indexing(first: 1) {
   _
   WEAPON_TREE
   WEAPON_TREE_RECOMBINED
-  _
+  UNKNOWN_33
   NECROPOLIS_HAUNTED
   NECROPOLIS_DEVOTED
 }
@@ -3150,7 +3208,8 @@ type Mods @tags(list: ["crafting"]) {
   HASH32: i32
   _: [rid]
   _: i32
-  _: [GrantedEffectsPerLevel]
+  _: [rid]
+  _: i32
 }
 
 type ModSellPriceTypes {
@@ -3960,7 +4019,6 @@ type PassiveJewelSlots {
   ReplacesSlot: PassiveJewelSlots
   ProxySlot: PassiveSkills
   StartIndices: [i32]
-  _: bool
 }
 
 type PassiveJewelNodeModifyingStats {
@@ -4030,7 +4088,6 @@ type PassiveSkillMasteryEffects {
   Stat2Value: i32
   Stat3Value: i32
   AchievementItem: AchievementItems
-  _: rid
 }
 
 type PassiveSkills {
@@ -4059,7 +4116,6 @@ type PassiveSkills {
   IsMultipleChoiceOption: bool
   Stat5Value: i32
   PassiveSkillBuffs: [BuffTemplates]
-  GrantedEffectsPerLevel: GrantedEffectsPerLevel
   IsAnointmentOnly: bool
   _: i32
   IsExpansion: bool
@@ -4080,7 +4136,12 @@ type PassiveSkills {
   _: [rid]
   _: bool
   _: rid
-  _: rid
+  _: bool
+  _: bool
+  AtlasSubTree: AtlasPassiveSkillSubTrees
+  _: bool
+  GrantedSkill: SkillGems
+  WeaponPointsGranted: i32
 }
 
 enum PassiveSkillTypes @indexing(first: 0) {
@@ -4507,6 +4568,7 @@ type SessionQuestFlags {
 type ShieldTypes @tags(list: ["item:def"]) {
   BaseItemTypesKey: BaseItemTypes @unique
   Block: i32
+  _: i32
 }
 
 type ShopTag {
@@ -4588,9 +4650,21 @@ type SkillGems @tags(list: ["item:def"]) {
   AwakenedVariant: SkillGems
   RegularVariant: SkillGems
   _: i32
+  _: i32
   ItemExperienceType: ItemExperienceTypes
   MtxSlotTypes: [MicrotransactionSkillGemEffectSlotTypes]
+  _: [rid]
+  _: bool
   GemEffects: [GemEffects]
+  _: bool
+  TutorialVideo: string
+  HoverImage: string
+  _: i32
+  _: i32
+  _: bool
+  _: i32
+  _: bool
+  _: string
 }
 
 enum SkillMines @indexing(first: 0) { _ }
@@ -4653,6 +4727,14 @@ type SocketNotches {
   RedSocketImage: string
   BlueSocketImage: string
   GreenSocketImage: string
+}
+
+type SoulCores {
+  BaseItemTypesKey: BaseItemTypes
+  StatsKeysWeapon: [Stats]
+  StatsValuesWeapon: [i32]
+  StatsKeysArmour: [Stats]
+  StatsValuesArmour: [i32]
 }
 
 type SoundEffects {
@@ -4790,6 +4872,7 @@ type Stats @tags(list: ["crafting"]) {
   IsScalable: bool
   ContextFlags: [VirtualStatContextFlags]
   _: [rid]
+  _: bool
 }
 
 enum StatSemantics @indexing(first: 1) {
@@ -4942,8 +5025,9 @@ type TableMonsterSpawners {
 
 type Tags {
   Id: string @unique
-  _: i32
+  HASH32: i32
   DisplayString: string
+  _: [rid]
   Name: string
 }
 
@@ -5142,6 +5226,13 @@ type UniqueStashTypes {
   IsDisabled: bool
 }
 
+type UtilityFlaskBuffs {
+  BuffDefinitionsKey: BuffDefinitions
+  StatValues: [i32]
+  StatValues2: [i32]
+  _: rid  
+}
+
 type VirtualStatContextFlags {
   Id: string @unique
   _: i32
@@ -5167,7 +5258,8 @@ enum WeaponArmourCommon @indexing(first: 0) { _ }
 
 type WeaponClasses {
   ItemClass: ItemClasses
-  _: i32
+  RangeMax: i32
+  _: rid
 }
 
 enum WeaponDamageScaling @indexing(first: 0) { _ }
@@ -5186,6 +5278,7 @@ enum WeaponSoundTypes @indexing(first: 0) { _ }
 type WeaponTypes @tags(list: ["item:def"]) {
   BaseItemTypesKey: BaseItemTypes @unique
   Critical: i32
+  _: rid
   "1000 / speed -> attacks per second"
   Speed: i32
   DamageMin: i32
@@ -5624,15 +5717,18 @@ type GemEffects {
   Id: string @unique
   Name: string
   GrantedEffect: GrantedEffects
-  GrantedEffectHardmode: GrantedEffects
-  GrantedEffect2: GrantedEffects
-  GrantedEffect2Hardmode: GrantedEffects
   SupportText: string
   SupportName: string
   GemTags: [GemTags]
   Consumed_ModsKey: Mods
   "Used by gem icon shader https://gist.github.com/zao/08878df57aba605e5fa1e6373f2dce02"
   ItemColor: i32
+  _: [rid]
+  AdditionalGrantedEffects: [GrantedEffects]
+  _: bool
+  _: bool
+  _: [i32]
+  _: i32
 }
 
 # Added 3.20
@@ -6012,9 +6108,9 @@ type MonsterStatueOverrides {
 
 # Added 3.19
 type PassiveJewelArt {
-  _: rid @unique
-  _: string
-  _: string
+  BaseItemTypesKey: BaseItemTypes @unique
+  SocketedImage: string
+  SocketedImageLarge: string
   _: rid
 }
 

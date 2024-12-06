@@ -71,6 +71,18 @@ type AtlasUpgradesInventoryLayout {
   _: rid
 }
 
+type AtlasPassiveSkillSubTrees {
+  Id: string
+  StartingNodeIcon: string
+  Background: string
+  X: i32
+  Y: i32
+  CounterX: i32
+  CounterY: i32
+  _: rid
+  _: rid
+}
+
 type AtlasPassiveSkillTreeGroupType {
   Id: string @unique
 }
