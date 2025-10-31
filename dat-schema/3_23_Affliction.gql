@@ -49,13 +49,16 @@ type CorpseTypeTags {
 }
 
 type Descendancy {
-  _: string
-  _: string
-  _: string
-  _: string
-  _: string
-  _: string
-  _: string
+  Id: string
+  Name: string
+  BackgroundImage: string
+  FlavourText: string
+  CoordinateRect: string
+  RGBFlavourTextColour: string
+  UnlockCondition: string
+  _: rid
+  _: rid
+  _: i32
   _: rid
   _: rid
 }

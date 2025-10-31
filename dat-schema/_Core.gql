@@ -565,8 +565,8 @@ type BaseItemTypes @tags(list: ["item:def", "item:droptable"]) {
   _: rid
   _: bool
   Unmodifiable: bool
-  Achievement1: [AchievementItems]
-  Achievement2: [AchievementItems]
+  Achievement: [AchievementItems]
+  _: [rid]
   IgnoreQuantBonus: bool
   _: bool
   _: rid
@@ -885,6 +885,7 @@ type Characters {
   _: MonsterVarieties
   _: i32
   _: f32
+  _: rid
 }
 
 type CharacterStartQuestState {
@@ -1129,6 +1130,7 @@ type CraftingBenchOptions @tags(list: ["crafting"]) {
   MapDevice: bool
   _: [rid]
   Tags: [Tags]
+  _: [rid]
 }
 
 type CraftingBenchSortCategories {
@@ -1184,6 +1186,7 @@ type CurrencyItems @tags(list: ["item:def", "item:recipe"]) {
   ChangedForHardmode: bool
   DescriptionHardmode: string @localized
   IsGold: bool
+  _: bool
   _: bool
 }
 
@@ -1269,6 +1272,7 @@ type DefaultMonsterStats {
   _: i32
   _: i32
   Armour: i32
+  _: i32
 }
 
 type DeliriumStashTabLayout {
@@ -2103,6 +2107,7 @@ type HideoutNPCs {
   _: i32
   _: bool
   _: rid
+  _: bool
 }
 
 type HideoutRarity {
@@ -2198,9 +2203,9 @@ type ItemClassCategories {
 type ItemClasses @tags(list: ["crafting"]) {
   Id: string @unique
   Name: string
+  TradeMarketCategory: TradeMarketCategory
   ItemClassCategory: ItemClassCategories
   RemovedIfLeavesArea: bool
-  _: [_] # All rows empty
   IdentifyAchievements: [AchievementItems]
   AllocateToMapOwner: bool
   AlwaysAllocate: bool
@@ -2219,7 +2224,7 @@ type ItemClasses @tags(list: ["crafting"]) {
   CanUpgradeRarity: bool
   _: bool
   _: bool
-  MaxInventoryDimensions: [i32]
+  Flags: [ItemClassFlags]
   Unmodifiable: bool
   CanBeFractured: bool
   EquipAchievements: AchievementItems
@@ -2697,6 +2702,7 @@ type MapSeriesTiers {
   NecropolisTier: i32
   SettlersTier: i32
   SecretsTier: i32
+  KeepersTier: i32
 }
 
 type MapStashSpecialTypeEntries {
@@ -2888,8 +2894,8 @@ type MinimapIcons {
   LargemapIconRadius: i32
   _: bool
   _: bool
+  _: bool
   MinimapIconPointerMaxDistance: i32
-  _: i32
   _: i32
 }
 
@@ -3180,6 +3186,7 @@ enum ModSetNames @indexing(first: 0) { _ }
 
 type ModType {
   Name: string @unique
+  _: [rid]
   ModSellPriceTypesKeys: [ModSellPriceTypes]
   _: bool
 }
@@ -3493,7 +3500,7 @@ type MonsterSpawnerOverrides {
 
 type MonsterTypes {
   Id: string @unique
-  _: i32
+  OTFile: string @file(ext: ".ot")
   _: i32
   IsSummoned: bool
   Armour: i32
@@ -3861,6 +3868,7 @@ type NPCs {
   _: rid
   Gender: string
   _: bool
+  _: i32
 }
 
 type NPCShop {
@@ -3969,6 +3977,7 @@ type PassiveJewelRadii {
   RingOuterRadius: i32
   RingInnerRadius: i32
   Radius: i32
+  _: rid
 }
 
 type PassiveJewelSlots {
@@ -4101,6 +4110,10 @@ type PassiveSkills {
   _: bool
   _: rid
   _: rid
+  _: rid
+  _: bool
+  _: bool
+  _: bool
 }
 
 enum PassiveSkillTypes @indexing(first: 0) {
@@ -5270,7 +5283,7 @@ type WorldAreas {
   _: i32
   _: i32
   LoadingScreens: [string] @file(ext: ".dds")
-  _: [rid]
+  _: rid
   _: [rid]
   _: i32
   TopologiesKeys: [Topologies]
@@ -5326,6 +5339,7 @@ type WorldAreas {
   Ruleset: Rulesets
   _: i32
   QuestFlag: QuestFlags
+  _: i32
 }
 
 type WorldAreaLeagueChances {
